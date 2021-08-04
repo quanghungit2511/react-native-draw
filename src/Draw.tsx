@@ -39,6 +39,7 @@ import {
   DEFAULT_OPACITY,
 } from './constants';
 import type { BrushType } from './components/renderer/BrushPreview';
+import Svg, { Path } from 'react-native-svg';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -489,41 +490,35 @@ const Draw = forwardRef<DrawRef, DrawProps>(
               <View style={styles.bottomContent}>
                 <View style={styles.buttonsContainer}>
                   {!viewVisibility.clear && (
-                    <Button onPress={reset} color="#81090A" style={buttonStyle}>
-                      <Delete fill="#81090A" height={30} width={30} />
-                    </Button>
+                    <Delete fill="gray" height={40} width={40}  onPress={reset}/>
                   )}
+
                   {!viewVisibility.undo && (
                     <View style={!viewVisibility.clear && styles.endButton}>
-                      <Button
-                        onPress={handleUndo}
-                        color="#ddd"
-                        style={buttonStyle}
-                      >
-                        <Undo fill="#ddd" height={30} width={30} />
-                      </Button>
+                      <Undo fill="gray" height={40} width={40}  onPress={handleUndo}/>
                     </View>
                   )}
                 </View>
 
-                <BrushPreview
-                  color={color}
-                  opacity={opacity}
-                  thickness={thickness}
-                  type={brushPreview}
-                />
+                
+                <Svg height={80} width={100}>
+                  <Path
+                    d="M 20 60 Q 30 20 50 40 Q 70 60 80 20 "
+                    fill="none"
+                    stroke={color}
+                    strokeWidth={thickness}
+                    opacity={opacity}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </Svg>
 
                 <View style={styles.buttonsContainer}>
                   {(!viewVisibility.brushProperties.opacity ||
                     !viewVisibility.brushProperties.size) && (
-                    <Button
-                      onPress={handlePenOnPress}
-                      color="#ddd"
-                      style={buttonStyle}
-                    >
-                      <Brush fill="#ddd" height={30} width={30} />
-                    </Button>
-                  )}
+                      <Brush fill="gray" height={40} width={40}  onPress={handlePenOnPress} />
+                    )}
+                  
                   {!viewVisibility.colorPicker && (
                     <View
                       style={
@@ -532,13 +527,7 @@ const Draw = forwardRef<DrawRef, DrawProps>(
                         styles.endButton
                       }
                     >
-                      <Button
-                        onPress={handleColorPicker}
-                        color={color}
-                        style={buttonStyle}
-                      >
-                        <Palette fill={color} height={30} width={30} />
-                      </Button>
+                        <Palette fill={"gray"} height={40} width={40} onPress={handleColorPicker} />
                     </View>
                   )}
                 </View>
@@ -598,10 +587,10 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between', 
   },
   endButton: {
-    marginLeft: 10,
+    marginLeft: 30,
   },
 });
 
